@@ -10,10 +10,12 @@ if(params.length>0) {
 	$.getJSON('http://developer.echonest.com/api/v4/playlist/static?'+params.join('&')+'&api_key='+api_key+'&format=json&results=20&type=artist&bucket=tracks&bucket=id:spotify-WW',function(data){
 		$.each(data.response.songs,function(i,song){
 			songs.push(song.tracks[0].foreign_id.split(':')[2]);
-		})
-		var playlist = 'spotify:trackset:'+artists.join(' + ')+':'+songs.join(',');
-		var player = '<iframe style="margin-top:10px" src="https://embed.spotify.com/?uri='+playlist+'" width="260" height="340" frameborder="0" allowtransparency="true"></iframe>';
-		$(".secondary.col").prepend('<div id="pregig" style="padding:16px 20px 15px 20px"><h3>PreGig Playlist</h3></div>');
-		$("#pregig").append(player);
+		});
+		if(songs.length>0) {
+			var playlist = 'spotify:trackset:'+artists.join(' + ')+':'+songs.join(',');
+			var player = '<iframe style="margin-top:10px" src="https://embed.spotify.com/?uri='+playlist+'" width="260" height="340" frameborder="0" allowtransparency="true"></iframe>';
+			$(".secondary.col").prepend('<div id="pregig" style="padding:16px 20px 15px 20px"><h3>PreGig Playlist</h3></div>');
+			$("#pregig").append(player);
+		}		
 	});
 }
